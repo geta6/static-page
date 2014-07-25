@@ -1,0 +1,59 @@
+@import '_config'
+
+
+html, body
+  margin 0
+  padding 0
+  width 100%
+  height 100%
+  font-weight 400
+  font-size 14px
+  line-height 1.5
+  font-family Montserrat, 'Helvetica Neue', Helvetica, Arial, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'Hiragino Sans GB', 'メイリオ', Meiryo, Sans-Serif
+  text-rendering optimizelegibility
+  font-smoothing antialiased
+
+
+a
+  outline none !important
+
+
+hr
+  border none
+  margin 24px auto 48px auto
+  width 60px
+  height 5px
+
+
+.navbar
+  border-width 0
+  transition background 0.18s $easing
+
+  .session .dropdown-toggle
+    padding-left 36px
+    background-position 6px 13px
+    background-size 24px 24px
+    background-repeat no-repeat
+
+  &.navbar-transparent
+    background-color transparent
+    .navbar-toggle
+      border-color transparent
+    .navbar-collapse
+      box-shadow none
+      border-top-color transparent
+
+
+.wrap
+  padding-top 50px
+  height 100%
+
+
+  section
+    display table
+    width 100%
+    min-height 100%
+
+    .container
+      display table-cell
+      vertical-align middle
