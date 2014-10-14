@@ -36,4 +36,4 @@ html
     if process.env.NODE_ENV == 'production'
       script(src='/application.js')
     else
-      script(data-main='/config.js', src='/vendor/require.js')
+      script(data-main='./config.js', src='./vendor/requirejs/require.js')

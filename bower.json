@@ -2,8 +2,6 @@
   "name": "static-page",
   "dependencies": {
     "almond": "~0.2.9",
-    "backbone": "~1.1.2",
-    "backbone.marionette": "~2.0.3",
     "bootstrap": "~3.2.0",
     "jquery": "~2.1.0",
     "lodash": "~2.4.1",

@@ -4,14 +4,10 @@ require.config
   baseUrl: '/config'
 
   paths:
-    'moment': '../vendor/moment'
-    'jquery': '../vendor/jquery'
-    'underscore': '../vendor/lodash'
-    'bootstrap': '../vendor/bootstrap'
-    'backbone': '../vendor/backbone'
-    'backbone.wreqr': '../vendor/backbone.wreqr'
-    'backbone.babysitter': '../vendor/backbone.babysitter'
-    'backbone.marionette': '../vendor/backbone.marionette'
+    'moment': '../vendor/moment/moment'
+    'jquery': '../vendor/jquery/dist/jquery'
+    'lodash': '../vendor/lodash/dist/lodash'
+    'bootstrap': '../vendor/bootstrap/dist/js/bootstrap'
 
 require [
   'app'
