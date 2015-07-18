@@ -1,1 +1,0 @@
-../../vendor/bower/backbone.marionette/lib/core/backbone.marionette.js

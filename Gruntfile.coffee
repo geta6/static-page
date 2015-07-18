@@ -10,36 +10,14 @@ module.exports = (grunt) ->
 
   process.env.NODE_ENV = if 'build' in grunt.cli.tasks then 'production' else 'development'
 
-  grunt.registerMultiTask 'coffeelint', 'CoffeeLint', ->
-    count = e: 0, w: 0
-    options = @options()
-    if options.coffeelintrc?
-      util._extend options, require options.coffeelintrc
-    (files = @filesSrc).forEach (file) ->
-      grunt.verbose.writeln "Linting #{file}..."
-      errors = coffeelint.lint (grunt.file.read file), options
-      unless errors.length
-        return grunt.verbose.ok()
-      reporter file, errors
-      errors.forEach (err) ->
-        switch err.level
-          when 'error' then count.e++
-          when 'warn'  then count.w++
-          else return
-        message = "#{file}:#{err.lineNumber} #{err.message} (#{err.rule})"
-        grunt.event.emit "coffeelint:#{err.level}", err.level, message
-        grunt.event.emit 'coffeelint:any', err.level, message
-    return no if count.e and !options.force
-    if !count.w and !count.e
-      s = if 1 < files.length then 's' else ''
-      grunt.log.ok "#{files.length} file#{s} lint free."
+  isProduction = process.env.NODE_ENV is 'production'
 
   grunt.registerTask '_build_js', [
     'coffee', 'coffeelint'
   ]
 
   grunt.registerTask '_build_css', [
-    'stylus', 'cssmin', 'csslint'
+    'stylus', 'csslint'
   ]
 
   grunt.registerTask '_build', [
@@ -54,11 +32,12 @@ module.exports = (grunt) ->
     '_build', 'connect', 'watch'
   ]
 
-  grunt.loadNpmTasks 'grunt-notify'
-
   grunt.initConfig
     clean:
-      site: ['public']
+      site: files: [{
+        expand: true
+        src: ['public/*', '!public/vendor']
+      }]
 
     copy:
       site:
@@ -86,7 +65,10 @@ module.exports = (grunt) ->
     stylus:
       site:
         options:
-          compress: yes
+          compress: isProduction
+          linenos: !isProduction
+          firebug: !isProduction
+          'include css': true
         files:
           'public/application.css': [
             'assets/styles/**/*.styl'
@@ -103,16 +85,8 @@ module.exports = (grunt) ->
           filter: 'isFile'
           ext: '.html'
         }]
-
-    cssmin:
       options:
-        separator: ''
-      common:
-        src: [
-          'vendor/bower/bootstrap/dist/css/bootstrap.css'
-          'public/application.css'
-        ]
-        dest: 'public/application.css'
+        pretty: !isProduction
 
     requirejs:
       site:
@@ -123,7 +97,7 @@ module.exports = (grunt) ->
           include: [ '../config' ]
           optimize: 'uglify2'
           wrap: yes
-          name: '../vendor/almond'
+          name: '../vendor/almond/almond'
           skipModuleInsertion: no
           generateSourceMaps: yes
           preserveLicenseComments: no
